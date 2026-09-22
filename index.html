@@ -1031,6 +1031,7 @@
                 <thead>
                     <tr>
                         <th>Client</th>
+                        <th>Contracting Agency</th>
                         <th>Scope of Work</th>
                         <th>Period</th>
                         <th>Performance Rating</th>
@@ -1039,36 +1040,49 @@
                 <tbody>
                     <tr>
                         <td>U.S. Secret Service</td>
+                        <td>Dept. of Homeland Security – U.S. Secret Service</td>
                         <td>Specialized logistics support, procurement coordination, and operational services for federal protective operations.</td>
-                        <td>2024 – Present</td>
+                        <td>2025 – Present</td>
                         <td>Excellent</td>
                     </tr>
                     <tr>
                         <td>U.S. Department of Homeland Security</td>
+                        <td>Dept. of Homeland Security</td>
                         <td>Consulting, administrative support, program management, and compliance services for mission-critical operations.</td>
-                        <td>2024 – Present</td>
+                        <td>2025 – Present</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>U.S. Department of the Army</td>
+                        <td>Dept. of Defense – Dept. of the Army</td>
+                        <td>Definitive contract for logistics and program support services.</td>
+                        <td>2026 – Present</td>
                         <td>Excellent</td>
                     </tr>
                     <tr>
                         <td>State Law Enforcement Division (SLED)</td>
+                        <td>State of South Carolina</td>
                         <td>Logistics coordination, equipment procurement, and operational support services for state law enforcement agencies.</td>
-                        <td>2024 – Present</td>
+                        <td>2025 – Present</td>
                         <td>Excellent</td>
                     </tr>
                     <tr>
                         <td>Public Sector Research Organization</td>
+                        <td>—</td>
                         <td>Consulting, staffing support, compliance documentation, and operational advisory services for overseas research missions.</td>
-                        <td>2024 – 2025</td>
+                        <td>2024 – 2026</td>
                         <td>Excellent</td>
                     </tr>
                     <tr>
                         <td>Commercial Healthcare Supplier</td>
+                        <td>Private sector</td>
                         <td>Procurement and distribution of medical and laboratory equipment and supplies.</td>
                         <td>2024 – Present</td>
                         <td>Excellent</td>
                     </tr>
                     <tr>
                         <td>Private Sector Client</td>
+                        <td>Private sector</td>
                         <td>Marketing consulting, branding, and communications strategy implementation.</td>
                         <td>2024 – Present</td>
                         <td>Very Good</td>
@@ -1131,7 +1145,11 @@
             
             <div class="contact-form fade-in">
                 <h3 style="color: var(--white); margin-bottom: 1.5rem; font-size: 1.5rem;">Send us a Message</h3>
-                <form action="mailto:info@shaheinadv.com" method="post" enctype="text/plain">
+                <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact" />
+                    <p style="display:none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </p>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -1154,6 +1172,10 @@
                     
                     <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                 </form>
+                <div id="form-success" style="display:none; color: var(--white); text-align:center; padding: 2rem 0;">
+                    <p style="font-size: 1.2rem; color: var(--bright-blue); font-weight:600;">Message sent — thank you.</p>
+                    <p style="margin-top: 0.5rem;">We'll get back to you shortly.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1180,6 +1202,27 @@
     </footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Contact form: submit via fetch to Netlify, show inline success message
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(contactForm);
+                fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(formData).toString()
+                })
+                .then(() => {
+                    contactForm.style.display = 'none';
+                    document.getElementById('form-success').style.display = 'block';
+                })
+                .catch(() => {
+                    alert('Something went wrong sending your message. Please email us directly at info@shaheinadv.com.');
+                });
+            });
+        }
+
         // Scroll animations
         const observerOptions = {
             threshold: 0.1,
